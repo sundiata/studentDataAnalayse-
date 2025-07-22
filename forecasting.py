@@ -22,26 +22,25 @@ print(risk_probs)
 years = np.arange(2024, 2029)
 forecast = pd.DataFrame(index=years, columns=risk_probs.index)
 
-# Start with current proportions
+
 forecast.loc[2024] = risk_probs.values
 
 for i, year in enumerate(years[1:], start=1):
     prev = forecast.loc[years[i-1]].astype(float)
     high = max(prev['High'] - 0.01, 0)
     low = min(prev['Low'] + 0.005, 1)
-    # Medium gets the remainder to keep sum = 1
+   
     medium = 1 - high - low
     forecast.loc[year] = [high, low, medium]
 
 print("\nForecasted proportions:")
 print(forecast)
 
-# --- Enhanced Plotting for Better Understanding ---
 plt.figure(figsize=(10,6))
 colors = {'High': '#e74c3c', 'Medium': '#f1c40f', 'Low': '#2ecc71'}
 for col in forecast.columns:
     plt.plot(forecast.index, forecast[col], marker='o', label=col, color=colors.get(col, None), linewidth=2)
-    # Add value labels to each point
+
     for x, y in zip(forecast.index, forecast[col]):
         plt.text(x, y + 0.01, f"{y:.2f}", ha='center', va='bottom', fontsize=10)
 plt.title('Forecasted Proportion of Student Risk Levels (2024-2028)', fontsize=16)
