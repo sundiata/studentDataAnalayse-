@@ -43,7 +43,7 @@ plt.tight_layout()
 plt.show()
 
 # --- Grouped Analysis: Enrollment Status vs Risk Level ---
-print("\n--- Enrollment Status vs Risk Level ---")
+# print("\n--- Enrollment Status vs Risk Level ---")
 enroll_risk = df.groupby(['enrollment_status', 'risk_level']).size().unstack(fill_value=0)
 print(enroll_risk)
 
